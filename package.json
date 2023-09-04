@@ -1,0 +1,25 @@
+{
+  "name": "are-you-paying-attention",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u00002\u00003\u00000\u00009\u0000_\u0000W\u0000o\u0000r\u0000d\u0000p\u0000r\u0000e\u0000s\u0000s\u0000_\u0000J\u0000a\u0000v\u0000a\u0000s\u0000c\u0000r\u0000i\u0000p\u0000t\u0000_\u0000P\u0000l\u0000u\u0000g\u0000i\u0000n\u0000\r\u0000 \u0000\r\u0000 \u0000#\u0000#\u0000 \u0000J\u0000a\u0000v\u0000a\u0000s\u0000c\u0000r\u0000i\u0000p\u0000t\u0000 \u0000l\u0000o\u0000a\u0000d\u0000e\u0000d\u0000 \u0000i\u0000n\u0000t\u0000o\u0000 \u0000W\u0000o\u0000r\u0000d\u0000p\u0000r\u0000e\u0000s\u0000s\u0000\r\u0000 \u0000\r\u0000 \u0000>\u0000 \u0000i\u0000n\u0000d\u0000e\u0000x\u0000.\u0000p\u0000h\u0000p\u0000 \u0000-\u0000>\u0000 \u0000f\u0000u\u0000n\u0000c\u0000t\u0000i\u0000o\u0000n\u0000 \u0000a\u0000d\u0000m\u0000i\u0000n\u0000A\u0000s\u0000s\u0000e\u0000t\u0000s\u0000(\u0000)\u0000\r\u0000 \u0000>\u0000 \u0000l\u0000o\u0000a\u0000d\u0000 \u0000J\u0000S\u0000 \u0000i\u0000n\u0000t\u0000o\u0000 \u0000W\u0000o\u0000r\u0000d\u0000p\u0000r\u0000e\u0000s\u0000s\u0000 \u0000J\u0000a\u0000v\u0000a\u0000S\u0000c\u0000r\u0000i\u0000p\u0000t\u0000:\u0000 \u0000w\u0000p\u0000.\u0000b\u0000l\u0000o\u0000c\u0000k\u0000s\u0000.\u0000r\u0000e\u0000g\u0000i\u0000s\u0000t\u0000e\u0000r\u0000B\u0000l\u0000o\u0000c\u0000k\u0000T\u0000y\u0000p\u0000e\u0000(\u0000)\u0000\r\u0000 \u0000",
+  "main": "test.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samedan/2309_Wordpress_Javascript_Plugin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samedan/2309_Wordpress_Javascript_Plugin/issues"
+  },
+  "homepage": "https://github.com/samedan/2309_Wordpress_Javascript_Plugin#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^26.12.0"
+  }
+}

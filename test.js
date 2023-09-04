@@ -3,9 +3,9 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   icon: "smiley",
   category: "common",
   edit: function () {
-    return wp.element.createElement(
+    return (
       "h3", // type of html element
-      null, // type of propertu, class
+      null, // type of property, class
       "Hello, this is from the admin editor screen" // children or content
     );
   },
