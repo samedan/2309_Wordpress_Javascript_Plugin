@@ -117,6 +117,34 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+////////////////////////////
+// Function that is always on
+(function () {
+  let locked = false; // the button 'Update' on the wordpress page
+
+  wp.data.subscribe(function () {
+    // the 'results' array will be empty if no correct answer is marked
+    const results = wp.data.select("core/block-editor").getBlocks().filter(function (block) {
+      return block.name == "ourplugin/are-you-paying-attention" && block.attributes.correctAnswer == undefined;
+    });
+    // If there ARE NOT correct answers voted
+    if (results.length && locked == false) {
+      locked = true;
+      // lock the 'Update' button (in wordpress)
+      wp.data.dispatch("core/editor").lockPostSaving("noanswer");
+    }
+    // If there ARE correct answers voted
+    if (!results.length && locked) {
+      locked = false;
+      // Unlock the 'Update' button (in wordpress)
+      wp.data.dispatch("core/editor").unlockPostSaving("noanswer");
+    }
+  });
+})();
+/////////////////////////////////
+// End Function that is always on
+
 wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   title: "Are You Paying Attention?",
   icon: "smiley",
@@ -127,7 +155,7 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     },
     answers: {
       type: "array",
-      default: ["red", "blue", "green"]
+      default: [""]
     },
     correctAnswer: {
       type: "number",
