@@ -27,6 +27,15 @@ function EditComponent(props) {
     props.setAttributes({ question: value });
   }
 
+  function deleteAnswer(indexToDelete) {
+    const newAnswers = props.attributes.answers.filter(function (x, index) {
+      // 'filter' runs for every item of the array
+      // if result of condition is 'true', the item will be included in teh new array
+      return index != indexToDelete;
+    });
+    props.setAttributes({ answers: newAnswers });
+  }
+
   return (
     <div className="paying-attention-edit-block">
       <TextControl
@@ -41,6 +50,7 @@ function EditComponent(props) {
           <Flex>
             <FlexBlock>
               <TextControl
+                autoFocus={answer == undefined}
                 value={answer}
                 onChange={(newValue) => {
                   const newAnswers = props.attributes.answers.concat([]);
@@ -55,7 +65,11 @@ function EditComponent(props) {
               </Button>
             </FlexItem>
             <FlexItem>
-              <Button isLink className="attention-delete">
+              <Button
+                isLink
+                className="attention-delete"
+                onClick={() => deleteAnswer(index)}
+              >
                 Delete
               </Button>
             </FlexItem>
@@ -63,7 +77,16 @@ function EditComponent(props) {
         );
       })}
 
-      <Button isPrimary>Add another answer</Button>
+      <Button
+        isPrimary
+        onClick={() => {
+          props.setAttributes({
+            answers: props.attributes.answers.concat([undefined]),
+          });
+        }}
+      >
+        Add another answer
+      </Button>
     </div>
   );
 }
