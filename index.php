@@ -13,9 +13,9 @@ if(! defined('ABSPATH')) exit; // Exit if accessed directly
 
 
 class AreYouPayingAttention {
-   function __construct() {
-     add_action('init', array($this, 'adminAssets'));
-   }
+  function __construct() {
+    add_action('init', array($this, 'adminAssets'));
+  }
 
    function adminAssets() {
     // load CSS
@@ -35,23 +35,22 @@ class AreYouPayingAttention {
       array(
         'editor_style' => 'quizeditcss', // CSS
         'editor_script' => 'ournewblocktype', // JS
-        'render_callback' => array($this, 'theHTML') // HTML
+        'render_callback' => array($this,'theHTML')
     ));  
    }
 
    // FRONTEND files
    function theHTML($attributes) {
-
+    echo wp_json_encode($attributes);
       // not on the backend, load only once on the frontend
       if(!is_admin()) { 
-        wp_enqueue_script('attentionFrontend', plugin_dir_url(__FILE__).'build/frontend.js',
-          array("wp-element"), '1.0', true);
+        wp_enqueue_script('attentionFrontend', plugin_dir_url(__FILE__).'build/frontend.js', array("wp-element"), '1.0', true);
         wp_enqueue_style('attentionFrontendStyles', plugin_dir_url(__FILE__).'build/frontend.css');
       }
       
       ob_start(); ?> <!-- ob = output buffer -->
           <div class="paying-attention-update-me">
-
+            <pre style="display:none"><?php echo wp_json_encode($attributes); ?></pre>            
           </div>
       <?php return ob_get_clean();
 
