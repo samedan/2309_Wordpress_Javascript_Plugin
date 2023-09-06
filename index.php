@@ -39,12 +39,20 @@ class AreYouPayingAttention {
     ));  
    }
 
+   // FRONTEND files
    function theHTML($attributes) {
+
+      // not on the backend, load only once on the frontend
+      if(!is_admin()) { 
+        wp_enqueue_script('attentionFrontend', plugin_dir_url(__FILE__).'build/frontend.js',
+          array("wp-element"), '1.0', true);
+        wp_enqueue_style('attentionFrontendStyles', plugin_dir_url(__FILE__).'build/frontend.css');
+      }
+      
       ob_start(); ?> <!-- ob = output buffer -->
-          <h3>Today the sky is <?php 
-            echo esc_html($attributes['skyColor']) 
-          ?> and the grass is <?php 
-            echo esc_html($attributes['grassColor']) ?>.</h3>
+          <div class="paying-attention-update-me">
+
+          </div>
       <?php return ob_get_clean();
 
    }
