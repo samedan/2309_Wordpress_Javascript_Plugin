@@ -21,5 +21,8 @@
   "homepage": "https://github.com/samedan/2309_Wordpress_Javascript_Plugin#readme",
   "devDependencies": {
     "@wordpress/scripts": "^26.12.0"
+  },
+  "dependencies": {
+    "react-color": "^2.19.3"
   }
 }

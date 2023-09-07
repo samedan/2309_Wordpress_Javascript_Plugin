@@ -41,7 +41,7 @@ class AreYouPayingAttention {
 
    // FRONTEND files
    function theHTML($attributes) {
-    echo wp_json_encode($attributes);
+    // echo wp_json_encode($attributes);
       // not on the backend, load only once on the frontend
       if(!is_admin()) { 
         wp_enqueue_script('attentionFrontend', plugin_dir_url(__FILE__).'build/frontend.js', array("wp-element"), '1.0', true);
