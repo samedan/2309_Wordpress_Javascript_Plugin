@@ -16183,6 +16183,7 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
       default: "left"
     }
   },
+  description: "Give your audience a chance to prove their comprehension.",
   example: {
     attributes: {
       question: "What is my name?",

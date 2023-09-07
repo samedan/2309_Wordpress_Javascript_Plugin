@@ -61,6 +61,7 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     bgColor: { type: "string", default: "#ebebeb" },
     theAlignment: { type: "string", default: "left" },
   },
+  description: "Give your audience a chance to prove their comprehension.",
   example: {
     attributes: {
       question: "What is my name?",
