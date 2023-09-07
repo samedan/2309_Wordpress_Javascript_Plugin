@@ -16177,6 +16177,19 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     bgColor: {
       type: "string",
       default: "#ebebeb"
+    },
+    theAlignment: {
+      type: "string",
+      default: "left"
+    }
+  },
+  example: {
+    attributes: {
+      question: "What is my name?",
+      answers: ["Meawsalot", "Barksalot", "Purrsalot", "Dan"],
+      correctAnswer: 3,
+      bgColor: "#CFE8F1",
+      theAlignment: "center"
     }
   },
   edit: EditComponent,
@@ -16216,14 +16229,20 @@ function EditComponent(props) {
     style: {
       backgroundColor: props.attributes.bgColor
     }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.BlockControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.AlignmentToolbar, {
+    value: props.attributes.theAlignment,
+    onChange: x => props.setAttributes({
+      theAlignment: x
+    })
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
     title: "Background Panel",
     initialOpen: true
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ColorPicker, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_color__WEBPACK_IMPORTED_MODULE_4__.ChromePicker, {
     color: props.attributes.bgColor,
     onChangeComplete: x => props.setAttributes({
       bgColor: x.hex
-    })
+    }),
+    disableAlpha: true
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
     label: "Question:",
     value: props.attributes.question,
