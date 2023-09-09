@@ -18,23 +18,13 @@ class AreYouPayingAttention {
   }
 
    function adminAssets() {
-    // load CSS
-    wp_register_style(
-      'quizeditcss', 
-       plugin_dir_url(__FILE__) . 'build/index.css'
-    );
-    // load JS
-     wp_register_script(
-       'ournewblocktype', 
-       plugin_dir_url(__FILE__) . 'build/index.js',
-       array('wp-blocks', 'wp-element', 'wp-editor') // list of dependecies
-     );
+    
+    //  echo (__DIR__);
+    //  exit();
      // Tell Block what to load 
-     register_block_type(
-      'ourplugin/are-you-paying-attention',
-      array(
-        'editor_style' => 'quizeditcss', // CSS
-        'editor_script' => 'ournewblocktype', // JS
+     register_block_type(__DIR__,
+      // 'ourplugin/are-you-paying-attention',
+      array(        
         'render_callback' => array($this,'theHTML')
     ));  
    }
@@ -42,12 +32,7 @@ class AreYouPayingAttention {
    // FRONTEND files
    function theHTML($attributes) {
     // echo wp_json_encode($attributes);
-      // not on the backend, load only once on the frontend
-      if(!is_admin()) { 
-        wp_enqueue_script('attentionFrontend', plugin_dir_url(__FILE__).'build/frontend.js', array("wp-element"), '1.0', true);
-        wp_enqueue_style('attentionFrontendStyles', plugin_dir_url(__FILE__).'build/frontend.css');
-      }
-      
+            
       ob_start(); ?> <!-- ob = output buffer -->
           <div class="paying-attention-update-me">
             <pre style="display:none"><?php echo wp_json_encode($attributes); ?></pre>            
