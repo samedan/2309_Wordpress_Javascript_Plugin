@@ -33,8 +33,11 @@ class AreYouPayingAttention {
    function theHTML($attributes) {
     // echo wp_json_encode($attributes);
             
-      ob_start(); ?> <!-- ob = output buffer -->
+      ob_start(); 
+      echo wp_json_encode($attributes);
+      ?> <!-- ob = output buffer -->
           <div class="paying-attention-update-me">
+            <p>Cur</p>
             <pre style="display:none"><?php echo wp_json_encode($attributes); ?></pre>            
           </div>
       <?php return ob_get_clean();

@@ -34,6 +34,16 @@ module.exports = window["ReactDOM"];
 
 /***/ }),
 
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["components"];
+
+/***/ }),
+
 /***/ "@wordpress/element":
 /*!*********************************!*\
   !*** external ["wp","element"] ***!
@@ -126,6 +136,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "react-dom");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _frontend_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./frontend.scss */ "./src/frontend.scss");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -140,12 +153,14 @@ document.addEventListener("DOMContentLoaded", function () {
       ...data
     }), div);
     console.log(data);
+    console.log("data");
     // div.classList.remove("paying-attention-update-me");
   });
 
   function Quiz(props) {
     const [isCorrect, setIsCorrect] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(undefined);
     const [isCorrectdelayed, setIsCorrectDelayed] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(undefined);
+    const [option, setOption] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
       if (isCorrect === false) {
         // stop voting after false voting
@@ -166,34 +181,37 @@ document.addEventListener("DOMContentLoaded", function () {
         setIsCorrect(false);
       }
     }
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "paying-attention-frontend",
       style: {
         backgroundColor: props.bgColor,
         textAlign: props.theAlignment
       }
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, props.question), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, props.answers.map(function (answer, index) {
-      return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
-        className: (isCorrectdelayed === true && index == props.correctAnswer ? "no-click" : "") + (isCorrectdelayed === true && index != props.correctAnswer ? "fade-incorrect" : ""),
-        onClick: isCorrect === true ? undefined : () => handleAnswer(index)
-      }, isCorrectdelayed === true && index == props.correctAnswer && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        width: "20",
-        height: "20",
-        className: "bi bi-check",
-        viewBox: "0 0 16 16"
-      }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-        d: "M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"
-      })), isCorrectdelayed === true && index != props.correctAnswer && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
-        xmlns: "http://www.w3.org/2000/svg",
-        width: "20",
-        height: "20",
-        className: "bi bi-x",
-        viewBox: "0 0 16 16"
-      }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-        d: "M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
-      })), answer);
-    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RadioControl, {
+      label: props.question,
+      help: "The type of the current user",
+      selected: option,
+      options: [{
+        label: "Oui",
+        value: "Oui"
+      }, {
+        label: "Non",
+        value: "Non"
+      }],
+      onChange: value => setOption(value)
+    }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, props.question), props.answers.map((answer, index) => {
+      if (typeof answer !== "object" && answer !== null) {
+        let result = answer.trim();
+        const linksArray = result.split(",");
+        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, linksArray), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, linksArray.map(link => {
+          return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+            href: link
+          }, link));
+        })), ";", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Produits conseils ", index, " : ", answer));
+      } else {
+        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Conseils", index, " : ", answer.conseils);
+      }
+    }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "correct-message" + (isCorrect === true ? " correct-message--visible" : "")
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
       xmlns: "http://www.w3.org/2000/svg",
@@ -217,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
       d: "M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
     }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
       d: "M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"
-    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Sorry, try again!")));
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Sorry, try again!"))));
   }
 });
 }();

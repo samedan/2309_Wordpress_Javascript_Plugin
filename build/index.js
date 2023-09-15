@@ -16131,6 +16131,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 ////////////////////////////
 // Function that is always on
 (function () {
@@ -16172,7 +16173,7 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     },
     correctAnswer: {
       type: "number",
-      default: undefined
+      default: 0
     },
     bgColor: {
       type: "string",
@@ -16198,7 +16199,10 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     return null;
   }
 });
+// correctAnswer: { type: "number", default: undefined },
+
 function EditComponent(props) {
+  const [option, setOption] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)("a");
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
     className: "paying-attention-edit-block",
     style: {
@@ -16231,6 +16235,11 @@ function EditComponent(props) {
       correctAnswer: index
     });
   }
+  if (props.attributes.answers) {
+    console.log(props.attributes.answers);
+  } else {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading...");
+  }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.BlockControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.AlignmentToolbar, {
@@ -16260,8 +16269,50 @@ function EditComponent(props) {
       margin: "20px 0 8px 0"
     }
   }, "Answers:"), props.attributes.answers.map(function (answer, index) {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Flex, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FlexBlock, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    if (answer != null) {
+      if (answer != null && index == 1) {
+        console.log(`answer.conseils`, answer.conseils);
+      }
+      // console.log(`answer${index}`, answer);
+    }
+    // if (answer[2] != null) {
+    //   console.log(`answerConseils`);
+    // }
+
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Flex, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FlexBlock, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RadioControl, {
+      label: "Type de Question"
+      // help="The type of the current user"
+      ,
+      selected: null,
+      options: [{
+        label: "Oui",
+        value: "Oui"
+      }, {
+        label: "Non",
+        value: "Non"
+      }]
+      // onChange={(value) => {
+      //   setOption(value);
+      //   const newAnswers = props.attributes.answers.concat([]);
+      //   newAnswers[index] = value;
+      //   props.setAttributes({ answers: newAnswers });
+      // }}
+      // onChange={(newValue) => {
+      //   const newAnswers = props.attributes.answers.concat([]);
+      //   newAnswers[index] = newValue;
+      //   props.setAttributes({ answers: newAnswers });
+      // }}
+      // onChange={(newValue) => {
+      //   console.log(newValue);
+      //   const newAnswers = props.attributes.answers.concat([]);
+
+      //   newAnswers[index] = setOption(newValue);
+      //   console.log(newAnswers[index]);
+      //   props.setAttributes({ answers: newAnswers });
+      // }}
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FlexBlock, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
       autoFocus: answer == undefined,
+      label: "Meds",
       value: answer,
       onChange: newValue => {
         const newAnswers = props.attributes.answers.concat([]);
@@ -16280,6 +16331,26 @@ function EditComponent(props) {
       className: "attention-delete",
       onClick: () => deleteAnswer(index)
     }, "Delete")));
+  }), props.attributes.answers.map(function (answer, index) {
+    if (answer != null && index == 1) return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+      style: {
+        backgroundColor: "#EEEEEE"
+      }
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Flex, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "CONSEILS"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FlexBlock, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+      autoFocus: answer == undefined,
+      label: "Conseils",
+      value: answer.conseils,
+      onChange: newValue => {
+        const newConseils = {
+          conseils: newValue
+        };
+        const newAnswers = props.attributes.answers.concat([]);
+        newAnswers[index] = newConseils;
+        props.setAttributes({
+          answers: newAnswers
+        });
+      }
+    }))));
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
     isPrimary: true,
     onClick: () => {
@@ -16287,7 +16358,16 @@ function EditComponent(props) {
         answers: props.attributes.answers.concat([undefined])
       });
     }
-  }, "Add another answer"));
+  }, "Add another answer"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    isPrimary: true,
+    onClick: () => {
+      props.setAttributes({
+        answers: props.attributes.answers.concat([{
+          conseils: "Conseil 1"
+        }])
+      });
+    }
+  }, "Add Conseils"));
 }
 }();
 /******/ })()

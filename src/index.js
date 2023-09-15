@@ -8,7 +8,9 @@ import {
   PanelBody,
   PanelRow,
   ColorPicker,
+  RadioControl,
 } from "@wordpress/components";
+import { useState } from "@wordpress/element";
 import "./index.scss";
 import {
   InspectorControls,
@@ -58,7 +60,7 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   attributes: {
     question: { type: "string" },
     answers: { type: "array", default: [""] },
-    correctAnswer: { type: "number", default: undefined },
+    correctAnswer: { type: "number", default: 0 },
     bgColor: { type: "string", default: "#ebebeb" },
     theAlignment: { type: "string", default: "left" },
   },
@@ -77,8 +79,11 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
     return null;
   },
 });
+// correctAnswer: { type: "number", default: undefined },
 
 function EditComponent(props) {
+  const [option, setOption] = useState("a");
+
   const blockProps = useBlockProps({
     className: "paying-attention-edit-block",
     style: { backgroundColor: props.attributes.bgColor },
@@ -102,6 +107,12 @@ function EditComponent(props) {
 
   function markAsCorrect(index) {
     props.setAttributes({ correctAnswer: index });
+  }
+
+  if (props.attributes.answers) {
+    console.log(props.attributes.answers);
+  } else {
+    return <p>Loading...</p>;
   }
 
   return (
@@ -129,13 +140,56 @@ function EditComponent(props) {
         onChange={updateQuestion}
         style={{ fontSize: "20px" }}
       />
+      {/* ANSWERS */}
       <p style={{ fontSize: "13px", margin: "20px 0 8px 0" }}>Answers:</p>
+
       {props.attributes.answers.map(function (answer, index) {
+        if (answer != null) {
+          if (answer != null && index == 1) {
+            console.log(`answer.conseils`, answer.conseils);
+          }
+          // console.log(`answer${index}`, answer);
+        }
+        // if (answer[2] != null) {
+        //   console.log(`answerConseils`);
+        // }
+
         return (
           <Flex>
             <FlexBlock>
+              <RadioControl
+                label="Type de Question"
+                // help="The type of the current user"
+                selected={null}
+                options={[
+                  { label: "Oui", value: "Oui" },
+                  { label: "Non", value: "Non" },
+                ]}
+                // onChange={(value) => {
+                //   setOption(value);
+                //   const newAnswers = props.attributes.answers.concat([]);
+                //   newAnswers[index] = value;
+                //   props.setAttributes({ answers: newAnswers });
+                // }}
+                // onChange={(newValue) => {
+                //   const newAnswers = props.attributes.answers.concat([]);
+                //   newAnswers[index] = newValue;
+                //   props.setAttributes({ answers: newAnswers });
+                // }}
+                // onChange={(newValue) => {
+                //   console.log(newValue);
+                //   const newAnswers = props.attributes.answers.concat([]);
+
+                //   newAnswers[index] = setOption(newValue);
+                //   console.log(newAnswers[index]);
+                //   props.setAttributes({ answers: newAnswers });
+                // }}
+              />
+            </FlexBlock>
+            <FlexBlock>
               <TextControl
                 autoFocus={answer == undefined}
+                label="Meds"
                 value={answer}
                 onChange={(newValue) => {
                   const newAnswers = props.attributes.answers.concat([]);
@@ -144,6 +198,23 @@ function EditComponent(props) {
                 }}
               />
             </FlexBlock>
+            {/* {answer[1] && (
+              <FlexBlock>
+                <p>answer.conseils: {answer[1]}</p>
+                <TextControl
+                  autoFocus={answer == undefined}
+                  label="Conseils"
+                  value={answer.conseils}
+                  onChange={(newValue) => {
+                    const newAnswers = props.attributes.answers.concat([]);
+                    newAnswers[index] = newValue;
+                    props.setAttributes({ answers: newAnswers });
+                  }}
+                />
+              </FlexBlock>
+            )} */}
+
+            {/* Icon Correct Answer */}
             <FlexItem>
               <Button onClick={() => markAsCorrect(index)}>
                 <Icon
@@ -156,6 +227,8 @@ function EditComponent(props) {
                 />
               </Button>
             </FlexItem>
+            {/* END Icon Correct Answer */}
+
             <FlexItem>
               <Button
                 isLink
@@ -168,6 +241,32 @@ function EditComponent(props) {
           </Flex>
         );
       })}
+      {props.attributes.answers.map(function (answer, index) {
+        if (answer != null && index == 1)
+          return (
+            <div style={{ backgroundColor: "#EEEEEE" }}>
+              <Flex>
+                <p>CONSEILS</p>
+
+                <FlexBlock>
+                  {/* <p>answer.conseils: {answer.conseils}</p> */}
+                  <TextControl
+                    autoFocus={answer == undefined}
+                    label="Conseils"
+                    value={answer.conseils}
+                    onChange={(newValue) => {
+                      const newConseils = { conseils: newValue };
+                      const newAnswers = props.attributes.answers.concat([]);
+
+                      newAnswers[index] = newConseils;
+                      props.setAttributes({ answers: newAnswers });
+                    }}
+                  />
+                </FlexBlock>
+              </Flex>
+            </div>
+          );
+      })}
 
       <Button
         isPrimary
@@ -178,6 +277,18 @@ function EditComponent(props) {
         }}
       >
         Add another answer
+      </Button>
+      <Button
+        isPrimary
+        onClick={() => {
+          props.setAttributes({
+            answers: props.attributes.answers.concat([
+              { conseils: "Conseil 1" },
+            ]),
+          });
+        }}
+      >
+        Add Conseils
       </Button>
     </div>
   );
