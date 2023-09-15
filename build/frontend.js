@@ -147,6 +147,7 @@ __webpack_require__.r(__webpack_exports__);
 // Load in the footer
 document.addEventListener("DOMContentLoaded", function () {
   const divsToUpdate = document.querySelectorAll(".paying-attention-update-me");
+  let recomandations = [];
   divsToUpdate.forEach(function (div) {
     const data = JSON.parse(div.querySelector("pre").innerHTML);
     react_dom__WEBPACK_IMPORTED_MODULE_2___default().render((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Quiz, {
@@ -161,7 +162,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const [isCorrect, setIsCorrect] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(undefined);
     const [isCorrectdelayed, setIsCorrectDelayed] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(undefined);
     const [option, setOption] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [addedRecomandations, setRecomandations] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+      recomandations = recomandations.concat(addedRecomandations);
       if (isCorrect === false) {
         // stop voting after false voting
         setTimeout(() => {
@@ -173,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
           setIsCorrectDelayed(true);
         }, 1000);
       }
-    }, [isCorrect]);
+    }, [isCorrect, addedRecomandations]);
     function handleAnswer(index) {
       if (index == props.correctAnswer) {
         setIsCorrect(true);
@@ -198,8 +201,11 @@ document.addEventListener("DOMContentLoaded", function () {
         label: "Non",
         value: "Non"
       }],
-      onChange: value => setOption(value)
-    }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, props.question), props.answers.map((answer, index) => {
+      onChange: value => {
+        setOption(value);
+        setRecomandations(recomandations.concat(props.answers[0]));
+      }
+    }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, props.question), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "OVERALL Recomandations: ", recomandations), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Reomandations: ", addedRecomandations), props.answers.map((answer, index) => {
       if (typeof answer !== "object" && answer !== null) {
         let result = answer.trim();
         const linksArray = result.split(",");
@@ -207,9 +213,9 @@ document.addEventListener("DOMContentLoaded", function () {
           return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
             href: link
           }, link));
-        })), ";", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Produits conseils ", index, " : ", answer));
+        })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Produits conseils : ", answer));
       } else {
-        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Conseils", index, " : ", answer.conseils);
+        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Insuffisance de : ", answer.conseils);
       }
     }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "correct-message" + (isCorrect === true ? " correct-message--visible" : "")

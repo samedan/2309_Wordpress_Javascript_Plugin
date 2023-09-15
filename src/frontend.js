@@ -7,6 +7,8 @@ import { RadioControl } from "@wordpress/components";
 document.addEventListener("DOMContentLoaded", function () {
   const divsToUpdate = document.querySelectorAll(".paying-attention-update-me");
 
+  let recomandations = [];
+
   divsToUpdate.forEach(function (div) {
     const data = JSON.parse(div.querySelector("pre").innerHTML);
     ReactDOM.render(<Quiz {...data} />, div);
@@ -19,8 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const [isCorrect, setIsCorrect] = useState(undefined);
     const [isCorrectdelayed, setIsCorrectDelayed] = useState(undefined);
     const [option, setOption] = useState("");
+    const [addedRecomandations, setRecomandations] = useState([]);
 
     useEffect(() => {
+      recomandations = recomandations.concat(addedRecomandations);
       if (isCorrect === false) {
         // stop voting after false voting
         setTimeout(() => {
@@ -32,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
           setIsCorrectDelayed(true);
         }, 1000);
       }
-    }, [isCorrect]);
+    }, [isCorrect, addedRecomandations]);
 
     function handleAnswer(index) {
       if (index == props.correctAnswer) {
@@ -41,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setIsCorrect(false);
       }
     }
+
     return (
       <>
         {/* <h1>{props.data.question}</h1> */}
@@ -60,9 +65,14 @@ document.addEventListener("DOMContentLoaded", function () {
               { label: "Oui", value: "Oui" },
               { label: "Non", value: "Non" },
             ]}
-            onChange={(value) => setOption(value)}
+            onChange={(value) => {
+              setOption(value);
+              setRecomandations(recomandations.concat(props.answers[0]));
+            }}
           />
           <p>{props.question}</p>
+          <p>OVERALL Recomandations: {recomandations}</p>
+          <p>Reomandations: {addedRecomandations}</p>
           {props.answers.map((answer, index) => {
             if (typeof answer !== "object" && answer !== null) {
               let result = answer.trim();
@@ -80,18 +90,11 @@ document.addEventListener("DOMContentLoaded", function () {
                       );
                     })}
                   </ul>
-                  ;
-                  <p>
-                    Produits conseils {index} : {answer}
-                  </p>
+                  <p>Produits conseils : {answer}</p>
                 </>
               );
             } else {
-              return (
-                <p>
-                  Conseils{index} : {answer.conseils}
-                </p>
-              );
+              return <p>Insuffisance de : {answer.conseils}</p>;
             }
           })}
           {/* {option == "Oui" && (
